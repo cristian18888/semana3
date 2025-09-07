@@ -1,1 +1,612 @@
-Cristian Rodriguez - 02240132026
+#Cristian Rodriguez - 02240132026
+
+
+# EJERCICIO 1
+
+def entrada_e1():
+    opcionFigura = input("\n[1] Triángulo\n[2] Cuadrado\n[3] Circunferencia\nSeleccione figura: ").strip()
+    return opcionFigura
+
+def proceso_e1(opcionFigura):
+    pi = 3.1416
+    if opcionFigura == "1":
+        base = float(input("Base del triángulo: "))
+        altura = float(input("Altura del triángulo: "))
+        ladoUno = float(input("Lado 1: "))
+        ladoDos = float(input("Lado 2: "))
+        ladoTres = float(input("Lado 3: "))
+        area = (base * altura) / 2.0
+        perimetro = ladoUno + ladoDos + ladoTres
+        return ("Triángulo", area, perimetro)
+    elif opcionFigura == "2":
+        lado = float(input("Lado del cuadrado: "))
+        area = lado * lado
+        perimetro = 4.0 * lado
+        return ("Cuadrado", area, perimetro)
+    elif opcionFigura == "3":
+        radio = float(input("Radio de la circunferencia: "))
+        area = pi * radio * radio
+        perimetro = 2.0 * pi * radio
+        return ("Circunferencia", area, perimetro)
+    else:
+        return ("Opción inválida", None, None)
+
+def salida_e1(resultadoFigura):
+    nombreFigura, area, perimetro = resultadoFigura
+    if area is None:
+        print("Opción inválida.")
+    else:
+        print(nombreFigura + " -> Área: " + str(area) + " | Perímetro: " + str(perimetro))
+
+
+# EJERCICIO 2
+
+def entrada_e2():
+    estudiantes = []
+    print("\nIngrese estudiantes y notas. Escriba 'no' para terminar.")
+    while True:
+        nombreEstudiante = input("Nombre (o 'no' para terminar): ").strip()
+        if nombreEstudiante.lower() == "no":
+            break
+        p1 = float(input("Nota p1 (0-5): "))
+        p2 = float(input("Nota p2 (0-5): "))
+        p3 = float(input("Nota p3 (0-5): "))
+        estudiantes.append([nombreEstudiante, p1, p2, p3])
+    return estudiantes
+
+def proceso_e2(listaEstudiantes):
+    resumen = []
+    indice = 0
+    while indice < len(listaEstudiantes):
+        item = listaEstudiantes[indice]
+        nombre = item[0]
+        p1 = item[1]
+        p2 = item[2]
+        p3 = item[3]
+        definitiva = (p1 + p2 + p3) / 3.0
+        estado = "APROBADO"
+        if definitiva < 3.0:
+            estado = "REPROBADO"
+        resumen.append([nombre, p1, p2, p3, definitiva, estado])
+        indice = indice + 1
+
+    aprobados = 0
+    reprobados = 0
+    indice = 0
+    sumaDef = 0.0
+    while indice < len(resumen):
+        sumaDef = sumaDef + resumen[indice][4]
+        if resumen[indice][5] == "APROBADO":
+            aprobados = aprobados + 1
+        else:
+            reprobados = reprobados + 1
+        indice = indice + 1
+
+    promedioDef = 0.0
+    if len(resumen) > 0:
+        promedioDef = sumaDef / float(len(resumen))
+    return [resumen, aprobados, reprobados, promedioDef]
+
+def salida_e2(datosResumen):
+    resumen = datosResumen[0]
+    aprobados = datosResumen[1]
+    reprobados = datosResumen[2]
+    promedioDef = datosResumen[3]
+    print("\n--- Resultados por estudiante ---")
+    i = 0
+    while i < len(resumen):
+        r = resumen[i]
+        print(r[0] + ": p1=" + str(r[1]) + " p2=" + str(r[2]) + " p3=" + str(r[3]) + " -> Def=" + str(r[4]) + " [" + r[5] + "]")
+        i = i + 1
+    print("\n--- Resumen ---")
+    print("Aprobados: " + str(aprobados) + " | Reprobados: " + str(reprobados) + " | Promedio definitivas: " + str(promedioDef))
+
+
+# EJERCICIO 3
+
+def entrada_e3():
+    numeroLimite = int(input("\nIngrese un entero no negativo: "))
+    return numeroLimite
+
+def proceso_e3(numeroLimite):
+    factorial = 1
+    i = 2
+    while i <= numeroLimite:
+        factorial = factorial + 0 
+        factorial = factorial * i
+        i = i + 1
+
+    cantidadPares = 0
+    cantidadImpares = 0
+    sumaPares = 0
+    sumaImpares = 0
+    i = 1
+    while i <= numeroLimite:
+        if i % 2 == 0:
+            cantidadPares = cantidadPares + 1
+            sumaPares = sumaPares + i
+        else:
+            cantidadImpares = cantidadImpares + 1
+            sumaImpares = sumaImpares + i
+        i = i + 1
+
+    return [factorial, cantidadPares, cantidadImpares, sumaPares, sumaImpares]
+
+def salida_e3(resultadoCalculo):
+    print("Factorial: " + str(resultadoCalculo[0]))
+    print("Pares: " + str(resultadoCalculo[1]) + " (suma=" + str(resultadoCalculo[3]) + ") | Impares: " + str(resultadoCalculo[2]) + " (suma=" + str(resultadoCalculo[4]) + ")")
+
+
+# EJERCICIO 4
+
+def entrada_e4():
+    primerNumero = float(input("\nPrimer número: "))
+    segundoNumero = float(input("Segundo número: "))
+    return [primerNumero, segundoNumero]
+
+def proceso_e4(numerosOperacion):
+    a = numerosOperacion[0]
+    b = numerosOperacion[1]
+    estado = "Activo"
+    while True:
+        opcionOperacion = input("\n[+] Sumar | [-] Restar | [*] Multiplicar | [/] Dividir | [x] Salir: ").strip()
+        if opcionOperacion == "+":
+            print("Suma: " + str(a + b))
+        elif opcionOperacion == "-":
+            print("Resta: " + str(a - b))
+        elif opcionOperacion == "*":
+            print("Multiplicación: " + str(a * b))
+        elif opcionOperacion == "/":
+            if b == 0:
+                print("Error: división por cero.")
+            else:
+                print("División: " + str(a / b))
+        elif opcionOperacion.lower() == "x":
+            estado = "FIN"
+            break
+        else:
+            print("Opción inválida.")
+    return estado
+
+def salida_e4(estadoOperacion):
+    print("Estado: " + estadoOperacion)
+
+
+# EJERCICIO 5
+
+def entrada_e5():
+    diasSemana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    ventas = [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+    while True:
+        opcionVentas = input("\n[1] Ingresar/actualizar día | [2] Total | [3] Promedio | [4] Ver | [0] Salir: ").strip()
+        if opcionVentas == "1":
+            diaIngresado = input("Día (Lunes..Domingo): ").strip().capitalize()
+            indice = 0
+            encontrado = -1
+            while indice < len(diasSemana):
+                if diasSemana[indice] == diaIngresado:
+                    encontrado = indice
+                    break
+                indice = indice + 1
+            if encontrado == -1:
+                print("Día inválido.")
+            else:
+                ventas[encontrado] = float(input("Ventas para " + diaIngresado + ": "))
+        elif opcionVentas == "2":
+            total = 0.0
+            i = 0
+            while i < len(ventas):
+                total = total + ventas[i]
+                i = i + 1
+            print("Total semana: " + str(total))
+        elif opcionVentas == "3":
+            total = 0.0
+            i = 0
+            while i < len(ventas):
+                total = total + ventas[i]
+                i = i + 1
+            print("Promedio diario: " + str(total / 7.0))
+        elif opcionVentas == "4":
+            print("Ventas actuales por día:")
+            i = 0
+            while i < len(diasSemana):
+                print(diasSemana[i] + ": " + str(ventas[i]))
+                i = i + 1
+        elif opcionVentas == "0":
+            break
+        else:
+            print("Opción inválida.")
+    return ventas
+
+def proceso_e5(ventasSemana):
+    total = 0.0
+    i = 0
+    while i < len(ventasSemana):
+        total = total + ventasSemana[i]
+        i = i + 1
+    promedio = total / 7.0
+    return [total, promedio, ventasSemana]
+
+def salida_e5(resultadoVentas):
+    total = resultadoVentas[0]
+    promedio = resultadoVentas[1]
+    print("\nVentas finales por día:")
+    diasSemana = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    i = 0
+    while i < 7:
+        print(diasSemana[i] + ": " + str(resultadoVentas[2][i]))
+        i = i + 1
+    print("Total: " + str(total) + " | Promedio: " + str(promedio))
+
+
+# EJERCICIO 6
+
+def entrada_e6():
+    enteroNoNegativo = int(input("\nEntero no negativo: "))
+    return enteroNoNegativo
+
+def proceso_e6(numero):
+    factorial = 1
+    i = 2
+    while i <= numero:
+        factorial = factorial * i
+        i = i + 1
+    return factorial
+
+def salida_e6(factorial):
+    print("Factorial: " + str(factorial))
+
+
+# EJERCICIO 7
+
+def entrada_e7():
+    numeroPositivo = int(input("\nIngrese un entero positivo: "))
+    return numeroPositivo
+
+def proceso_e7(numeroPositivo):
+    sumaPares = 0
+    i = 2
+    while i <= numeroPositivo:
+        if i % 2 == 0:
+            sumaPares = sumaPares + i
+        i = i + 1
+    return sumaPares
+
+def salida_e7(sumaPares):
+    print("Suma de pares: " + str(sumaPares))
+
+
+# EJERCICIO 8
+
+def entrada_e8():
+    palabra = input("\nIngrese una palabra: ").strip()
+    return palabra
+
+def proceso_e8(palabra):
+    
+    izquierda = 0
+    derecha = len(palabra) - 1
+    esPalindromo = True
+    while izquierda < derecha:
+        if palabra[izquierda] != palabra[derecha]:
+            esPalindromo = False
+            break
+        izquierda = izquierda + 1
+        derecha = derecha - 1
+    return esPalindromo
+
+def salida_e8(esPalindromo):
+    if esPalindromo:
+        print("Es palíndromo.")
+    else:
+        print("No es palíndromo.")
+
+
+# EJERCICIO 9
+
+
+def entrada_e9():
+    cantidadValores = int(input("\n¿Cuántas temperaturas en Celsius ingresará?: "))
+    temperaturasC = []
+    i = 0
+    while i < cantidadValores:
+        valor = float(input("Celsius #" + str(i + 1) + ": "))
+        temperaturasC.append(valor)
+        i = i + 1
+    return temperaturasC
+
+def proceso_e9(temperaturasC):
+    temperaturasF = []
+    i = 0
+    while i < len(temperaturasC):
+        f = (temperaturasC[i] * 9.0) / 5.0 + 32.0
+        temperaturasF.append(f)
+        i = i + 1
+    return temperaturasF
+
+def salida_e9(temperaturasF):
+    i = 0
+    while i < len(temperaturasF):
+        print("Fahrenheit #" + str(i + 1) + ": " + str(temperaturasF[i]))
+        i = i + 1
+
+
+# EJERCICIO 10
+
+def entrada_e10():
+    numeroTabla = int(input("\nIngrese un entero para la tabla de multiplicar: "))
+    return numeroTabla
+
+def proceso_e10(numeroTabla):
+    resultados = []
+    i = 1
+    while i <= 10:
+        resultados.append([numeroTabla, i, numeroTabla * i])
+        i = i + 1
+    return resultados
+
+def salida_e10(tabla):
+    i = 0
+    while i < len(tabla):
+        fila = tabla[i]
+        print(str(fila[0]) + " x " + str(fila[1]) + " = " + str(fila[2]))
+        i = i + 1
+
+
+# EJERCICIO 11
+
+def entrada_e11():
+    numeroEntero = int(input("\nIngrese un entero positivo: "))
+    return numeroEntero
+
+def proceso_e11(numeroEntero):
+    if numeroEntero == 0:
+        return 1
+    if numeroEntero < 0:
+        numeroEntero = -numeroEntero
+    conteo = 0
+    while numeroEntero > 0:
+        numeroEntero = int(numeroEntero / 10)
+        conteo = conteo + 1
+    return conteo
+
+def salida_e11(cantidadDigitos):
+    print("Cantidad de dígitos: " + str(cantidadDigitos))
+
+
+# EJERCICIO 12
+
+
+def entrada_e12():
+    numeroPrimo = int(input("\nIngrese un entero: "))
+    return numeroPrimo
+
+def proceso_e12(numeroPrimo):
+    if numeroPrimo <= 1:
+        return False
+    divisor = 2
+    while divisor * divisor <= numeroPrimo:
+        if numeroPrimo % divisor == 0:
+            return False
+        divisor = divisor + 1
+    return True
+
+def salida_e12(esPrimo):
+    if esPrimo:
+        print("Es primo.")
+    else:
+        print("No es primo.")
+
+
+# EJERCICIO 13
+
+def entrada_e13():
+    numeroLimite = int(input("\nIngrese un entero positivo N: "))
+    return numeroLimite
+
+def proceso_e13(numeroLimite):
+    pares = []
+    impares = []
+    i = 1
+    while i <= numeroLimite:
+        if i % 2 == 0:
+            pares.append(i)
+        else:
+            impares.append(i)
+        i = i + 1
+    return [pares, impares]
+
+def salida_e13(listasSeparadas):
+    pares = listasSeparadas[0]
+    impares = listasSeparadas[1]
+    print("Pares:")
+    i = 0
+    while i < len(pares):
+        print(pares[i])
+        i = i + 1
+    print("Impares:")
+    j = 0
+    while j < len(impares):
+        print(impares[j])
+        j = j + 1
+
+
+
+# EJERCICIO 14
+
+
+def entrada_e14():
+    temperaturaActual = float(input("\nTemperatura actual: "))
+    temperaturaDeseada = float(input("Temperatura deseada: "))
+    rangoAceptable = float(input("Rango aceptable (±): "))
+    pasoAjuste = float(input("Paso de ajuste por iteración: "))
+    return [temperaturaActual, temperaturaDeseada, rangoAceptable, pasoAjuste]
+
+def proceso_e14(datosTemperatura):
+    temperaturaActual = datosTemperatura[0]
+    temperaturaDeseada = datosTemperatura[1]
+    rangoAceptable = datosTemperatura[2]
+    pasoAjuste = datosTemperatura[3]
+    historial = []
+    while True:
+        diferencia = temperaturaDeseada - temperaturaActual
+        accion = "OK"
+        if diferencia > 0:
+            accion = "CALEFACCION"
+          
+            if diferencia >= pasoAjuste:
+                temperaturaActual = temperaturaActual + pasoAjuste
+            else:
+                temperaturaActual = temperaturaActual + diferencia
+        elif diferencia < 0:
+            accion = "AIRE_ACONDICIONADO"
+       
+            diferenciaAbs = -diferencia
+            if diferenciaAbs >= pasoAjuste:
+                temperaturaActual = temperaturaActual - pasoAjuste
+            else:
+                temperaturaActual = temperaturaActual - diferenciaAbs
+        historial.append([temperaturaActual, accion])
+        if temperaturaActual >= (temperaturaDeseada - rangoAceptable) and temperaturaActual <= (temperaturaDeseada + rangoAceptable):
+            break
+    return historial
+
+def salida_e14(historial):
+    i = 0
+    while i < len(historial):
+        print("Temp: " + str(historial[i][0]) + " | Accion: " + historial[i][1])
+        i = i + 1
+    print("Control de temperatura finalizado dentro del rango.")
+
+
+# EJERCICIO 15
+
+
+def entrada_e15():
+    horaActual = int(input("\nHora actual (0-23): "))
+    hayPersona = input("¿Hay alguien en casa? (s/n): ").strip().lower()
+    return [horaActual, hayPersona]
+
+def proceso_e15(datosLuz):
+    horaActual = datosLuz[0]
+    hayPersona = datosLuz[1] == "s"
+    esNoche = False
+    if horaActual >= 19 or horaActual <= 5:
+        esNoche = True
+    if esNoche and hayPersona:
+        return "ENCENDER_LUCES"
+    else:
+        return "APAGAR_LUCES"
+
+def salida_e15(accionLuces):
+    if accionLuces == "ENCENDER_LUCES":
+        print("Luces encendidas.")
+    else:
+        print("Luces apagadas.")
+
+
+# EJERCICIO 16
+
+
+def entrada_e16():
+    humedadActual = float(input("\nHumedad actual (%): "))
+    humedadUmbral = float(input("Umbral deseado (%): "))
+    ciclosMaximos = int(input("¿Cuántos ciclos máximo desea simular?: "))
+    return [humedadActual, humedadUmbral, ciclosMaximos]
+
+def proceso_e16(datosRiego):
+    humedadActual = datosRiego[0]
+    humedadUmbral = datosRiego[1]
+    ciclosMaximos = datosRiego[2]
+    registro = []
+    ciclo = 1
+    while ciclo <= ciclosMaximos:
+        if humedadActual < humedadUmbral:
+            registro.append(["RIEGO_ACTIVADO", humedadActual])
+            print("Riego activado. (Simulación) Ingrese nueva humedad tras riego:")
+            humedadActual = float(input("Nueva humedad (%): "))
+        else:
+            registro.append(["RIEGO_APAGADO", humedadActual])
+            print("Riego apagado. Ingrese nueva humedad para continuar monitoreo:")
+            humedadActual = float(input("Nueva humedad (%): "))
+        if humedadActual >= humedadUmbral:
+            registro.append(["OBJETIVO_ALCANZADO", humedadActual])
+            break
+        ciclo = ciclo + 1
+    return registro
+
+def salida_e16(registroRiego):
+    i = 0
+    while i < len(registroRiego):
+        print(registroRiego[i][0] + " | Humedad: " + str(registroRiego[i][1]))
+        i = i + 1
+    print("Proceso de riego finalizado.")
+
+
+
+#menu por si quiere probar alguno de los ejercicios
+
+def menuMaestro():
+    while True:
+        print("\n=== Menú Maestro de Ejercicios ===")
+        print("1) Áreas/Perímetros")
+        print("2) Notas estudiantes")
+        print("3) Factorial + pares/impares")
+        print("4) Calculadora 2 números")
+        print("5) Ventas por días")
+        print("6) Factorial simple")
+        print("7) Suma de pares hasta N")
+        print("8) Palíndromo")
+        print("9) Celsius -> Fahrenheit")
+        print("10) Tabla multiplicar")
+        print("11) Contar dígitos")
+        print("12) Número primo")
+        print("13) Separar 1..N en pares/impares")
+        print("14) Control de temperatura")
+        print("15) Control de iluminación")
+        print("16) Riego automático")
+        print("0) Salir")
+
+        opcion = input("Seleccione: ")
+        match (opcion):
+            case "1":
+                salida_e1(proceso_e1(entrada_e1()))
+                break
+            case "2":
+                salida_e2(proceso_e2(entrada_e2()))
+            case "3":
+                salida_e3(proceso_e3(entrada_e3()))
+            case "4":
+                salida_e4(proceso_e4(entrada_e4()))
+            case "5":
+                salida_e5(proceso_e5(entrada_e5()))
+            case "6":
+                salida_e6(proceso_e6(entrada_e6()))
+            case "7":
+                salida_e7(proceso_e7(entrada_e7()))
+            case "8":
+                salida_e8(proceso_e8(entrada_e8()))
+            case "9":
+                salida_e9(proceso_e9(entrada_e9()))
+            case "10":
+                salida_e10(proceso_e10(entrada_e10()))
+            case "11":
+                salida_e11(proceso_e11(entrada_e11()))
+            case "12":
+                salida_e12(proceso_e12(entrada_e12()))
+            case "13":
+                salida_e13(proceso_e13(entrada_e13()))
+            case "14":
+                salida_e14(proceso_e14(entrada_e14()))
+            case "15":
+                salida_e15(proceso_e15(entrada_e15()))
+            case "16":
+                salida_e16(proceso_e16(entrada_e16()))
+            case "0":
+                print("Saliendo...")
+            case _:
+                print("Opción inválida.")
+
+menuMaestro()
+
+#recomiendo expandir terminal para mejor visualizacion =D
